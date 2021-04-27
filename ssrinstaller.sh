@@ -58,6 +58,7 @@ WantedBy=multi-user.target
 EOF
 systemctl enable ssr.service
 systemctl restart ssr.service
+service ssr status
 }
 
 firewalld_iptables(){
@@ -106,6 +107,7 @@ menu(){
           ;; 
         6)
           iptables -F
+          echo -e "${Green}所有防火墙规则已经清空${Font}"
           ;; 
         7)
           addtcpport
