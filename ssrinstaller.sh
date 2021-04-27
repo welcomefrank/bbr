@@ -85,7 +85,8 @@ menu(){
     echo -e "${Green}5.${Font} 关闭firewalld服务"
     echo -e "${Green}6.${Font} 清空所有防火墙规则"
     echo -e "${Green}7.${Font} 安装iptables 并开启指定TCP端口"
-    echo -e "${Green}8.${Font}  退出 \n"
+    echo -e "${Green}8.${Font} 重启使所有规则生效"
+    echo -e "${Green}9.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
@@ -110,6 +111,9 @@ menu(){
           addtcpport
           ;; 
         8)
+          reboot
+          ;; 
+        9)
           exit 0
           ;;
         *)
