@@ -9,7 +9,6 @@ RedBG="\033[41;37m"
 Font="\033[0m"
 
 ssrinstaller(){
-yum update -y
 yum install git -y
 git clone -b manyuser https://github.com/welcomefrank/shadowsocksr.git
 cd /root/shadowsocksr
@@ -63,22 +62,26 @@ systemctl restart ssr.service
 
 menu(){
     echo -e "${Red}系统升级 + 安装ShadowsocksR + 创建帐号 + 设置开机启动${Font}"
-    echo -e "${Green}1.${Font} 仅系统升级+安装SSR"
-    echo -e "${Green}2.${Font} 创建帐号"
-    echo -e "${Green}3.${Font} 赋予SH可执行权限 并设置开机启动"
-    echo -e "${Green}4.${Font}  退出 \n"
+    echo -e "${Green}1.${Font} 仅系统升级"
+    echo -e "${Green}2.${Font} 仅安装SSR"
+    echo -e "${Green}3.${Font} 创建帐号"
+    echo -e "${Green}4.${Font} 赋予SH可执行权限 并设置开机启动"
+    echo -e "${Green}5.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
-          ssrinstaller
+          yum update -y
         ;;
         2)
+          ssrinstaller
+        ;;
+        3)
           createaccount
           ;;
-        3)
+        4)
           startonrun
           ;;         
-        4)
+        5)
           exit 0
           ;;
         *)
