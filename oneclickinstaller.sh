@@ -12,7 +12,7 @@ menu(){
     echo -e "${Red}系统升级 + 安装ShadowsocksR + 创建帐号 + 设置开机启动${Font}"
     echo -e "${Green}1.${Font} 仅系统升级+安装SSR"
     echo -e "${Green}2.${Font} 创建帐号"
-    echo -e "${Green}3.${Font} 开机启动"
+    echo -e "${Green}3.${Font} 赋予SH可执行权限 并开机启动"
     echo -e "${Green}4.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
@@ -24,20 +24,8 @@ menu(){
           ;;
         3)
           startonrun
-          ;;
+          ;;         
         4)
-          uninstall_dnsmasq
-          ;;  
-        5)
-          uninstall_sniproxyconf
-          ;;  
-        6)
-          uninstall_sniproxy
-          ;;  
-        7)
-          make_uksniproxy
-          ;;          
-        8)
           exit 0
           ;;
         *)
@@ -57,6 +45,7 @@ bash initcfg.sh
 sed -i "s/API_INTERFACE = 'sspanelv2'/API_INTERFACE = 'mudbjson'/" userapiconfig.py
 sed -i "s/SERVER_PUB_ADDR = '127.0.0.1'/SERVER_PUB_ADDR = '$(wget -qO- -t1 -T2 ipinfo.io/ip)'/" userapiconfig.py
 }
+
 createaccount(){
 cd /root/shadowsocksr
 echo -e "Please specify a name for this new account:"
