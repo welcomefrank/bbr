@@ -8,34 +8,6 @@ GreenBG="\033[42;37m"
 RedBG="\033[41;37m"
 Font="\033[0m"
 
-menu(){
-    echo -e "${Red}系统升级 + 安装ShadowsocksR + 创建帐号 + 设置开机启动${Font}"
-    echo -e "${Green}1.${Font} 仅系统升级+安装SSR"
-    echo -e "${Green}2.${Font} 创建帐号"
-    echo -e "${Green}3.${Font} 赋予SH可执行权限 并设置开机启动"
-    echo -e "${Green}4.${Font}  退出 \n"
-    read -p "请输入数字：" menu_num
-    case $menu_num in
-        1)
-          ssrinstaller
-        ;;
-        2)
-          createaccount
-          ;;
-        3)
-          startonrun
-          ;;         
-        4)
-          exit 0
-          ;;
-        *)
-          echo -e "${RedBG}请输入正确的数字${Font}"
-          ;;
-    esac
-}
-
-menu
-
 ssrinstaller(){
 yum update -y
 yum install git -y
@@ -88,3 +60,31 @@ EOF
 systemctl enable ssr.service
 systemctl restart ssr.service
 }
+
+menu(){
+    echo -e "${Red}系统升级 + 安装ShadowsocksR + 创建帐号 + 设置开机启动${Font}"
+    echo -e "${Green}1.${Font} 仅系统升级+安装SSR"
+    echo -e "${Green}2.${Font} 创建帐号"
+    echo -e "${Green}3.${Font} 赋予SH可执行权限 并设置开机启动"
+    echo -e "${Green}4.${Font}  退出 \n"
+    read -p "请输入数字：" menu_num
+    case $menu_num in
+        1)
+          ssrinstaller
+        ;;
+        2)
+          createaccount
+          ;;
+        3)
+          startonrun
+          ;;         
+        4)
+          exit 0
+          ;;
+        *)
+          echo -e "${RedBG}请输入正确的数字${Font}"
+          ;;
+    esac
+}
+
+menu
