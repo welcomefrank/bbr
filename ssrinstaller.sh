@@ -12,7 +12,7 @@ menu(){
     echo -e "${Red}系统升级 + 安装ShadowsocksR + 创建帐号 + 设置开机启动${Font}"
     echo -e "${Green}1.${Font} 仅系统升级+安装SSR"
     echo -e "${Green}2.${Font} 创建帐号"
-    echo -e "${Green}3.${Font} 赋予SH可执行权限 并开机启动"
+    echo -e "${Green}3.${Font} 赋予SH可执行权限 并设置开机启动"
     echo -e "${Green}4.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
