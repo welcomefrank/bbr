@@ -19,13 +19,13 @@ sed -i "s/SERVER_PUB_ADDR = '127.0.0.1'/SERVER_PUB_ADDR = '$(wget -qO- -t1 -T2 i
 
 createaccount(){
 cd /root/shadowsocksr
-echo -e "Please specify a name for this new account:"
+echo -e "${Red}Please specify a name for this new account:${Font}"
 read accountname
-echo -e "Please specify a port for this new account:"
+echo -e "${Red}Please specify a port for this new account:${Font}"
 read portnumber
-echo -e "Please specify a password for this new account"
+echo -e "${Red}Please specify a password for this new account:${Font}"
 read password
-echo -e "Please specify traffic limit number (Gb) for this new account"
+echo -e "${Red}Please specify traffic limit number (Gb) for this new account:${Font}"
 read trafficlimit
 python mujson_mgr.py -a -u $accountname -p $portnumber -k $password -m aes-256-cfb -O auth_chain_a -o tls1.2_ticket_auth -t $trafficlimit
 }
