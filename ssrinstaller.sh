@@ -60,13 +60,32 @@ systemctl enable ssr.service
 systemctl restart ssr.service
 }
 
+firewalld_iptables(){
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl status firewalld
+}
+
+addtcpport(){
+yum install iptables-services -y
+read -p "请输入新增的TCP端口：" newport
+iptables -I INPUT -p tcp --dport $newport -j ACCEPT
+service iptables save
+service iptables restart
+chkconfig iptables on
+iptables -L -n
+}
+
 menu(){
     echo -e "${Red}系统升级 + 安装ShadowsocksR + 创建帐号 + 设置开机启动${Font}"
     echo -e "${Green}1.${Font} 仅系统升级"
     echo -e "${Green}2.${Font} 仅安装SSR"
     echo -e "${Green}3.${Font} 创建帐号"
     echo -e "${Green}4.${Font} 赋予SH可执行权限 并设置开机启动"
-    echo -e "${Green}5.${Font}  退出 \n"
+    echo -e "${Green}5.${Font} 关闭firewalld服务"
+    echo -e "${Green}6.${Font} 清空所有防火墙规则"
+    echo -e "${Green}7.${Font} 开启指定TCP端口"
+    echo -e "${Green}8.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
@@ -82,6 +101,15 @@ menu(){
           startonrun
           ;;         
         5)
+          firewalld_iptables
+          ;; 
+        6)
+          iptables -F
+          ;; 
+        7)
+          addtcpport
+          ;; 
+        8)
           exit 0
           ;;
         *)
