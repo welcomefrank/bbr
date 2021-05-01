@@ -15,6 +15,7 @@ cd /root/shadowsocksr
 bash initcfg.sh
 sed -i "s/API_INTERFACE = 'sspanelv2'/API_INTERFACE = 'mudbjson'/" userapiconfig.py
 sed -i "s/SERVER_PUB_ADDR = '127.0.0.1'/SERVER_PUB_ADDR = '$(wget -qO- -t1 -T2 ipinfo.io/ip)'/" userapiconfig.py
+menu
 }
 
 createaccount(){
@@ -28,6 +29,7 @@ read password
 echo -e "${Green}Please specify traffic limit number (Gb) for this new account:${Font}"
 read trafficlimit
 python mujson_mgr.py -a -u $accountname -p $portnumber -k $password -m aes-256-cfb -O auth_chain_a -o tls1.2_ticket_auth -t $trafficlimit
+menu
 }
 
 startonrun(){
@@ -59,12 +61,14 @@ EOF
 systemctl enable ssr.service
 systemctl restart ssr.service
 service ssr status
+menu
 }
 
 firewalld_iptables(){
 systemctl stop firewalld
 systemctl disable firewalld
 systemctl status firewalld
+menu
 }
 
 addtcpport(){
@@ -75,6 +79,7 @@ service iptables save
 service iptables restart
 chkconfig iptables on
 iptables -L -n
+menu
 }
 
 menu(){
