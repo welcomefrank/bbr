@@ -106,10 +106,11 @@ menu(){
     echo -e "${Green}5.${Font} 关闭firewalld服务"
     echo -e "${Green}6.${Font} 清空所有防火墙规则"
     echo -e "${Green}7.${Font} 安装iptables 并开启指定TCP端口"
-    echo -e "${Green}8.${Font} 显示本机全部已有端口"
-    echo -e "${Green}9.${Font} 将指定端口流量清零"
-    echo -e "${Green}10.${Font} 重启使所有规则生效"
-    echo -e "${Green}11.${Font}  退出 \n"
+    echo -e "${Green}8.${Font} 查看本机serverspeeder状态"
+    echo -e "${Green}9.${Font} 显示本机全部已有端口"
+    echo -e "${Green}10.${Font} 将指定端口流量清零"
+    echo -e "${Green}11.${Font} 重启使所有规则生效"
+    echo -e "${Green}12.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
@@ -135,15 +136,18 @@ menu(){
           addtcpport
           ;; 
         8)
-          displayallports
+          service serverspeeder status
           ;; 
         9)
-          clearporttraffic
+          displayallports
           ;; 
         10)
-          reboot
+          clearporttraffic
           ;; 
         11)
+          reboot
+          ;; 
+        12)
           exit 0
           ;;
         *)
