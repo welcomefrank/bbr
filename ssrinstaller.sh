@@ -8,6 +8,15 @@ GreenBG="\033[42;37m"
 RedBG="\033[41;37m"
 Font="\033[0m"
 
+returntobase(){
+read -p "是否要返回主菜单? (默认任意键返回主菜单/按N或n退出)" backtobase
+if [ $backtobase = "N" -o $backtobase = "n" ];then
+exit 0
+else 
+menu
+fi
+}
+
 ssrinstaller(){
 yum install git -y
 git clone -b manyuser https://github.com/welcomefrank/shadowsocksr.git
@@ -15,7 +24,7 @@ cd /root/shadowsocksr
 bash initcfg.sh
 sed -i "s/API_INTERFACE = 'sspanelv2'/API_INTERFACE = 'mudbjson'/" userapiconfig.py
 sed -i "s/SERVER_PUB_ADDR = '127.0.0.1'/SERVER_PUB_ADDR = '$(wget -qO- -t1 -T2 ipinfo.io/ip)'/" userapiconfig.py
-menu
+returntobase
 }
 
 createaccount(){
@@ -29,7 +38,7 @@ read password
 echo -e "${Green}Please specify traffic limit number (Gb) for this new account:${Font}"
 read trafficlimit
 python mujson_mgr.py -a -u $accountname -p $portnumber -k $password -m aes-256-cfb -O auth_chain_a -o tls1.2_ticket_auth -t $trafficlimit
-menu
+returntobase
 }
 
 startonrun(){
@@ -61,14 +70,14 @@ EOF
 systemctl enable ssr.service
 systemctl restart ssr.service
 service ssr status
-menu
+returntobase
 }
 
 firewalld_iptables(){
 systemctl stop firewalld
 systemctl disable firewalld
 systemctl status firewalld
-menu
+returntobase
 }
 
 addtcpport(){
@@ -79,13 +88,13 @@ service iptables save
 service iptables restart
 chkconfig iptables on
 iptables -L -n
-menu
+returntobase
 }
 
 displayallports(){
 cd /root/shadowsocksr/
 python mujson_mgr.py -l
-menu
+returntobase
 }
 
 clearporttraffic(){
@@ -94,7 +103,7 @@ read -p "将指定端口流量清零：" clearport
 python mujson_mgr.py -l -p $clearport
 python mujson_mgr.py -c -p $clearport
 python mujson_mgr.py -l -p $clearport
-menu
+returntobase
 }
 
 menu(){
@@ -137,7 +146,7 @@ menu(){
           ;; 
         8)
           service serverspeeder status
-          menu
+          returntobase
           ;; 
         9)
           displayallports
