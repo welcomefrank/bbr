@@ -137,6 +137,7 @@ menu(){
           ;; 
         8)
           service serverspeeder status
+          menu
           ;; 
         9)
           displayallports
