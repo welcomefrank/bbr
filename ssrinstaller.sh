@@ -82,9 +82,16 @@ iptables -L -n
 menu
 }
 
+displayallports(){
+cd /root/shadowsocksr/
+python mujson_mgr.py -l
+menu
+}
+
 clearporttraffic(){
+cd /root/shadowsocksr/
 read -p "将指定端口流量清零：" clearport
-python /root/shadowsocksr/mujson_mgr.py -c -p $clearport
+python mujson_mgr.py -c -p $clearport
 menu
 }
 
@@ -126,7 +133,7 @@ menu(){
           addtcpport
           ;; 
         8)
-          python /root/shadowsocksr/mujson_mgr.py -l
+          displayallports
           ;; 
         9)
           clearporttraffic
