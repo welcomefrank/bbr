@@ -85,6 +85,7 @@ menu
 clearporttraffic(){
 read -p "将指定端口流量清零：" clearport
 python /root/shadowsocksr/mujson_mgr.py -c -p $clearport
+menu
 }
 
 menu(){
