@@ -91,7 +91,9 @@ menu
 clearporttraffic(){
 cd /root/shadowsocksr/
 read -p "将指定端口流量清零：" clearport
+python mujson_mgr.py -l -p $clearport
 python mujson_mgr.py -c -p $clearport
+python mujson_mgr.py -l -p $clearport
 menu
 }
 
