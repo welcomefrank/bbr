@@ -10,37 +10,37 @@ echo -e "本机目前内核如下:"
 uname -a
 cat /etc/redhat-release
 read -p "请确认本机Centos版本? 如7.2 需要保留1位小数" centosversion
-if [ $centosversion = “6.7" ];then
+if [ $centosversion = 6.7 ];then
 wget http://github.itzmx.com/1265578519/kernel/master/6.5/kernel-2.6.32-504.el6.x86_64.rpm
 kernelfile='kernel-2.6.32-504.el6.x86_64.rpm'
-elif [ $centosversion = "6.8" ];then
+elif [ $centosversion = 6.8 ];then
 wget http://ftp.scientificlinux.org/linux/scientific/6.6/x86_64/updates/security/kernel-2.6.32-504.3.3.el6.x86_64.rpm
 kernelfile='kernel-2.6.32-504.3.3.el6.x86_64.rpm'
-elif [ $centosversion = "6.9" ];then
+elif [ $centosversion = 6.9 ];then
 wget http://vault.centos.org/6.6/cr/x86_64/Packages/kernel-2.6.32-573.1.1.el6.x86_64.rpm
 kernelfile='kernel-2.6.32-573.1.1.el6.x86_64.rpm'
-elif [ $centosversion = "7.0" ];then
+elif [ $centosversion = 7.0 ];then
 wget https://buildlogs.centos.org/c7.01.u/kernel/20150327030147/3.10.0-229.1.2.el7.x86_64/kernel-3.10.0-229.1.2.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
-elif [ $centosversion = "7.1" ];then
+elif [ $centosversion = 7.1 ];then
 wget http://ftp.scientificlinux.org/linux/scientific/7.1/x86_64/updates/security/kernel-3.10.0-229.1.2.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
-elif [ $centosversion = "7.2" ];then
+elif [ $centosversion = 7.2 ];then
 wget http://ftp.scientificlinux.org/linux/scientific/7.1/x86_64/updates/security/kernel-3.10.0-229.1.2.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
-elif [ $centosversion = "7.3" ];then
+elif [ $centosversion = 7.3 ];then
 wget https://buildlogs.centos.org/c7.01.u/kernel/20150327030147/3.10.0-229.1.2.el7.x86_64/kernel-3.10.0-229.1.2.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
-elif [ $centosversion = "7.4" ];then
+elif [ $centosversion = 7.4 ];then
 wget https://buildlogs.centos.org/c7.01.u/kernel/20150327030147/3.10.0-229.1.2.el7.x86_64/kernel-3.10.0-229.1.2.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
-elif [ $centosversion = "7.5" ];then
+elif [ $centosversion = 7.5 ];then
 wget https://buildlogs.centos.org/c7.01.u/kernel/20150327030147/3.10.0-229.1.2.el7.x86_64/kernel-3.10.0-229.1.2.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
-elif [ $centosversion = "7.6" ];then
+elif [ $centosversion = 7.6 ];then
 wget https://buildlogs.centos.org/c7.01.u/kernel/20150327030147/3.10.0-229.1.2.el7.x86_64/kernel-3.10.0-229.1.2.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
-elif [ $centosversion = "7.7" ];then
+elif [ $centosversion = 7.7 ];then
 wget https://buildlogs.centos.org/c7.1511.00/kernel/20151119220809/3.10.0-327.el7.x86_64/kernel-3.10.0-327.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
 else
