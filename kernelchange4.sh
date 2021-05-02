@@ -75,7 +75,12 @@ exit 0
 else
 echo -e "确认将在本机安装内核$kernelfile"
 fi
-rpm -ivh $kernelfile --force | tee log.txt
+rpm -ivh $kernelfile --force 2>&1 | tee log.txt
+if [ $? -eq 0 ]; then
+echo -e "安装新内核成功"
+else
+echo -e "安装新内核失败"
+fi
 rm -rf /root/$kernelfile
 rm -rf /root/log.txt
 echo -e "本机默认启动的内核 按顺序排列如下:"
