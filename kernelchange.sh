@@ -42,13 +42,15 @@ elif { $centosversion = '7.7' };then
 wget https://buildlogs.centos.org/c7.1511.00/kernel/20151119220809/3.10.0-327.el7.x86_64/kernel-3.10.0-327.el7.x86_64.rpm
 kernelfile='kernel-3.10.0-229.1.2.el7.x86_64.rpm'
 else
-read -p "暂时没有合适的 请根据本机内核填入合适的下载链接" kernelfile
-wget $kernelfile
+read -p "暂时没有合适的 请根据本机内核填入合适的下载链接" kernellink
+wget $kernellink
+kernelfile=${kernellink##*/}
 fi
 read -p "将在本机安装内核$kernelfile 按任意键确认 按n回车表示放弃并退出" confirmkernel 
 if { $confirmkernel = 'n' };then
 exit 0
 fi
+rpm -ivh $kernelfile --force
 echo -e "本机默认启动的内核 按顺序排列如下:"
 grub2-editenv list
 read -p "将重启机器使新安装内核生效 按任意键确认 按n回车表示放弃并退出" rebootvps 
