@@ -75,8 +75,9 @@ exit 0
 else
 echo -e "确认将在本机安装内核$kernelfile"
 fi
-rpm -ivh $kernelfile --force | tee >/dev/null 2>&1 &
+rpm -ivh $kernelfile --force | tee log.txt
 rm -rf /root/$kernelfile
+rm -rf /root/log.txt
 echo -e "本机默认启动的内核 按顺序排列如下:"
 grub2-editenv list
 read -p "将重启机器使新安装内核生效 按任意键确认 按n回车表示放弃并退出" rebootvps 
