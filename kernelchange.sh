@@ -1,6 +1,6 @@
 hostnamectl
 read -p "请确认本机架构是kvm/xen? 按n回车表示否并退出 按其它任意键继续" structurestatus 
-if [ $structurestatus = “n” ];then
+if [ $structurestatus = "n" ];then
 exit 0
 else 
 echo -e "本机架构是kvm/xen 可以继续"
@@ -9,7 +9,7 @@ yum install wget kernel-firmware grubby dracut-kernel -y
 echo -e "本机目前内核如下:"
 uname -a
 cat /etc/redhat-release
-read -p "请确认本机Centos版本? 如7.2" centosversion
+read -p "请确认本机Centos版本? 如7.2 需要保留1位小数" centosversion
 if [ $centosversion = “6.7" ];then
 wget http://github.itzmx.com/1265578519/kernel/master/6.5/kernel-2.6.32-504.el6.x86_64.rpm
 kernelfile='kernel-2.6.32-504.el6.x86_64.rpm'
