@@ -1,9 +1,9 @@
 hostnamectl
 read -p "请确认本机架构是kvm/xen? 按n回车表示否并退出 按其它任意键继续" structurestatus 
-if [ $structurestatus != "n" ];then
-echo -e "本机架构是kvm/xen 可以继续"
-else 
+if [ $structurestatus = "n" ];then
 exit 0
+else 
+echo -e "本机架构是kvm/xen 可以继续"
 fi
 yum install wget kernel-firmware grubby dracut-kernel -y
 echo -e "本机目前内核如下:"
@@ -13,7 +13,7 @@ read -p "请确认本机Centos版本? 如7.2 需要保留1位小数" centosversi
 
 linkbroken(){
 if [ $? -eq 0 ];then
-echo "kernelfile downloaded successfully"
+echo "$kernelfile downloaded successfully"
 else
 read -p "下载链接已坏 请重新提供新的下载链接" kernellinknew
 wget $kernellinknew
@@ -70,19 +70,19 @@ wget $kernellink
 kernelfile=${kernellink##*/}
 fi
 read -p "将在本机安装内核$kernelfile 按任意键确认 按n回车表示放弃并退出" confirmkernel 
-if [ $confirmkernel != "n" ];then
-echo -e "确认将在本机安装内核$kernelfile"
+if [ $confirmkernel = "n" ];then
+exit 0 
 else
-exit 0
+echo -e "确认将在本机安装内核$kernelfile"
 fi
 rpm -ivh $kernelfile --force | tee >/dev/null 2>&1 &
 rm -rf /root/$kernelfile
 echo -e "本机默认启动的内核 按顺序排列如下:"
 grub2-editenv list
 read -p "将重启机器使新安装内核生效 按任意键确认 按n回车表示放弃并退出" rebootvps 
-if [ $rebootvps != "n" ];then
+if [ $rebootvps = "n" ];then
+exit 0
+else
 echo -e "正在重启本机使新内核生效"
 reboot
-else
-exit 0
 fi
