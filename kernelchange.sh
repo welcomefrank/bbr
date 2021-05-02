@@ -1,9 +1,9 @@
 hostnamectl
 read -p "请确认本机架构是kvm/xen? 按n回车表示否并退出 按其它任意键继续" structurestatus 
-if [ $structurestatus = "n" ];then
-exit 0
-else 
+if [ $structurestatus != "n" ];then
 echo -e "本机架构是kvm/xen 可以继续"
+else 
+exit 0
 fi
 yum install wget kernel-firmware grubby dracut-kernel -y
 echo -e "本机目前内核如下:"
@@ -49,17 +49,18 @@ wget $kernellink
 kernelfile=${kernellink##*/}
 fi
 read -p "将在本机安装内核$kernelfile 按任意键确认 按n回车表示放弃并退出" confirmkernel 
-if { $confirmkernel = "n" };then
-exit 0
-else
+if [ $confirmkernel != "n" ];then
 echo -e "确认将在本机安装内核$kernelfile"
+else
+exit 0
 fi
 rpm -ivh $kernelfile --force
 echo -e "本机默认启动的内核 按顺序排列如下:"
 grub2-editenv list
 read -p "将重启机器使新安装内核生效 按任意键确认 按n回车表示放弃并退出" rebootvps 
-if { $rebootvps = "n" };then
-exit 0
-else
+if [ $rebootvps != "n" ];then
 echo -e "正在重启本机使新内核生效"
+reboot
+else
+exit 0
 fi
