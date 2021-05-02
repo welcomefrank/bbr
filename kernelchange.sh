@@ -75,7 +75,7 @@ echo -e "确认将在本机安装内核$kernelfile"
 else
 exit 0
 fi
-rpm -ivh $kernelfile --force
+rpm -ivh $kernelfile --force | tee >/dev/null 2>&1 &
 rm -rf /root/$kernelfile
 echo -e "本机默认启动的内核 按顺序排列如下:"
 grub2-editenv list
