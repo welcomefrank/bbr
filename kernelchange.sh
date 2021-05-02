@@ -3,6 +3,7 @@ read -p "请确认本机架构是kvm/xen? 按n回车表示否并退出 按其它
 if [ $structurestatus = “n” ];then
 exit 0
 else 
+echo -e "本机架构是kvm/xen 可以继续"
 fi
 yum install wget kernel-firmware grubby dracut-kernel -y
 echo -e "本机目前内核如下:"
@@ -51,6 +52,7 @@ read -p "将在本机安装内核$kernelfile 按任意键确认 按n回车表示
 if { $confirmkernel = "n" };then
 exit 0
 else
+echo -e "确认将在本机安装内核$kernelfile"
 fi
 rpm -ivh $kernelfile --force
 echo -e "本机默认启动的内核 按顺序排列如下:"
@@ -59,4 +61,5 @@ read -p "将重启机器使新安装内核生效 按任意键确认 按n回车�
 if { $rebootvps = "n" };then
 exit 0
 else
+echo -e "正在重启本机使新内核生效"
 fi
