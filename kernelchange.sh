@@ -14,7 +14,7 @@ read -p "请确认本机Centos版本? 如7.2 需要保留1位小数" centosversi
 
 linkbroken(){
 if [ $? -eq 0 ];then
-echo "$kernelfile downloaded successfully"
+echo -e "新内核已经下载完毕"
 else
 read -p "下载链接已坏 请重新提供新的下载链接" kernellinknew
 wget $kernellinknew
