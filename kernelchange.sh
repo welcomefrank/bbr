@@ -75,7 +75,7 @@ exit 0
 else
 echo -e "确认将在本机安装内核$kernelfile"
 fi
-rpm -ivh $kernelfile --force 2>&1 | tee logkernel.txt
+rpm -ivh /root/$kernelfile --force 2>&1 | tee logkernel.txt
 if [ $? -eq 0 ]; then
 echo -e "安装新内核成功"
 else
