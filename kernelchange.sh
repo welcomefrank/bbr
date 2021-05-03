@@ -71,7 +71,7 @@ wget -P /root $kerneloklink
 kernelfile=${kerneloklink##*/}
 fi
 kernelfile=${kernellink##*/}
-read -p "将在本机安装内核$kernelfile 按任意键确认 按n回车表示放弃并退出" confirmkernel 
+read -p "将在本机安装新内核 按任意键确认 按n回车表示放弃并退出" confirmkernel 
 if [ $confirmkernel = "n" ];then
 exit 0 
 else
