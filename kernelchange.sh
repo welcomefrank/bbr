@@ -75,7 +75,7 @@ read -p "将在本机安装新内核 按任意键确认 按n回车表示放弃�
 if [ $confirmkernel = "n" ];then
 exit 0 
 else
-echo -e "确认将在本机安装内核$kernelfile"
+echo -e "确认将在本机安装新内核$kernelfile"
 fi
 rpm -ivh /root/$kernelfile --force 2>&1 | tee logkernel.txt
 if [ $? -eq 0 ]; then
