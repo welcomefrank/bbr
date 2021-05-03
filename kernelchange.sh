@@ -15,9 +15,10 @@ read -p "请确认本机Centos版本? 如7.2 需要保留1位小数" centosversi
 linkbroken(){
 if [ $? -eq 0 ];then
 echo -e "新内核已经下载完毕"
+kernelfile=${kernellink##*/}
 else
 read -p "下载链接已坏 请重新提供新的下载链接" kernellinknew
-wget $kernellinknew
+wget -P /root $kernellinknew
 kernelfile=${kernellinknew##*/}
 fi
 }
@@ -70,7 +71,6 @@ read -p "暂时没有合适的 请根据本机内核填入合适的下载链接"
 wget -P /root $kerneloklink
 kernelfile=${kerneloklink##*/}
 fi
-kernelfile=${kernellink##*/}
 read -p "将在本机安装新内核 按任意键确认 按n回车表示放弃并退出" confirmkernel 
 if [ $confirmkernel = "n" ];then
 exit 0 
