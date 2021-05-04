@@ -26,6 +26,22 @@ EOF
 service haproxy restart
 }
 
+read_properties(){
+  file="/root/test.conf"
+  while IFS="=" read -r rulename rulefrontendport rulebackendip rulebackendport; do
+case "$rulename" in
+ "rulename")
+frontend $rulename-in
+        bind *:$rulefrontendport
+        default_backend $rulename-out
+
+backend $rulename-out
+        server server1 $rulebackendip:$rulebackendport maxconn 20480 ;;
+    esac
+  done <"/root/test.conf"
+  echo "$rulename, $rulefrontendport, $rulebackendip, $rulebackendport"
+}
+
 firewalld_iptables(){
 systemctl stop firewalld
 systemctl disable firewalld
