@@ -1,4 +1,6 @@
 sudo su
+
+haproxyinstaller(){
 yum install wget dmidecode net-tools psmisc haproxy -y
 echo "NETWORKING=yes" >/etc/sysconfig/network
 sysctl -w net.ipv4.ip_forward=1
@@ -9,6 +11,7 @@ service haproxy restart
 chkconfig haproxy on
 chmod +x /etc/rc.d/rc.local
 sed -in-place -e '$a /usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg' /etc/rc.d/rc.local
+}
 
 addrule(){
 read -p "请输入新增线路的名称：" rulename
@@ -59,3 +62,6 @@ chkconfig iptables on
 iptables -L -n
 returntobase
 }
+
+addrule
+read_properties
