@@ -18,6 +18,7 @@ read -p "请输入新增线路的名称：" rulename
 read -p "请输入新增线路的前端口：" rulefrontendport
 read -p "请输入新增线路的后端IP地址：" rulebackendip
 read -p "请输入新增线路的后端口：" rulebackendport
+touch /root/test.conf
 cat >> /root/test.conf << "EOF"
 frontend $rulename-in
         bind *:$rulefrontendport
