@@ -24,6 +24,9 @@ exit 0
 else
 echo -e "已经确认新增线路信息 继续..."
 fi
+touch /root/haproxydata.txt
+sed -in-place -e '$a $rulename $rulefrontendport $rulebackendip $rulebackendport' /root/haproxydata.txt
+cat /root/haproxydata.txt
 touch /root/test.conf
 cat >> /root/test.conf << EOF
 frontend $rulename-in
@@ -35,23 +38,15 @@ backend $rulename-out
 
 EOF
 service haproxy restart
+service haproxy status
 cat /root/test.conf
 }
 
-read_properties(){
-  file="/root/test.conf"
-  while IFS="=" read -r rulename rulefrontendport rulebackendip rulebackendport; do
-case "$rulename" in
- "rulename")
-frontend $rulename-in
-        bind *:$rulefrontendport
-        default_backend $rulename-out
+deleterule(){
+read -p "请输入想要删除线路的前端口" deleteport
+sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt
+sed -in-place -e /root/test.conf
 
-backend $rulename-out
-        server server1 $rulebackendip:$rulebackendport maxconn 20480 ;;
-    esac
-  done <"/root/test.conf"
-  echo "$rulename, $rulefrontendport, $rulebackendip, $rulebackendport"
 }
 
 firewalld_iptables(){
