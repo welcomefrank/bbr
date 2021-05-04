@@ -20,6 +20,10 @@ read -p "请输入新增线路的后端IP地址：" rulebackendip
 read -p "请输入新增线路的后端口：" rulebackendport
 touch /root/test.conf
 cat >> /root/test.conf << "EOF"
+export rulename=$rulename
+export rulefrontendport=$rulefrontendport
+export rulebackendip=$rulebackendip
+export rulebackendport=$rulebackendport
 frontend $rulename-in
         bind *:$rulefrontendport
         default_backend $rulename-out
