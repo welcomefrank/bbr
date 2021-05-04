@@ -42,11 +42,17 @@ service haproxy status
 cat /root/test.conf
 }
 
-deleterule(){
-read -p "请输入想要删除线路的前端口" deleteport
-sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt
-sed -in-place -e /root/test.conf
+displayrules(){
+cat /root/haproxydata.txt
+}
 
+deleterule(){
+cat /root/test.conf
+read -p "请输入想要删除线路的前端口:" deleteport
+sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt 
+sed -i "N;/\n.*$deleteport/!P;D" /root/test.conf
+sed -in-place -e "/$deleteport/,+5d" /root/test.conf 
+cat /root/test.conf
 }
 
 firewalld_iptables(){
@@ -67,5 +73,26 @@ iptables -L -n
 returntobase
 }
 
+addudprule(){
+yum install iptables-services -y
+chkconfig iptables on
+read -p "请输入本服务器的UDP前端口：" sourcepport
+read -p "请输入终端服务器的IP：" destinationip
+read -p "请输入终端服务器的端口：" destinationport
+iptables -t nat -A PREROUTING -p udp --dport $sourcepport -j DNAT --to-destination $destinationip:$destinationport
+iptables -t nat -A POSTROUTING -p udp -d $destinationip --dport $destinationport -j MASQUERADE
+service iptables save
+service iptables restart
+iptables -L -n
+}
+
+deleteudprule(){
+iptables -L -n  --line-number
+read -p "请输入需要删除的INPUT规则序列号：" linenumber
+iptables -D INPUT $linenumber
+service iptables save
+service iptables restart
+iptables -L -n
+}
 addrule
-read_properties
+deleterule
