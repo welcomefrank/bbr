@@ -25,3 +25,21 @@ backend $rulename-out
 EOF
 service haproxy restart
 }
+
+firewalld_iptables(){
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl status firewalld
+returntobase
+}
+
+addtcpport(){
+yum install iptables-services -y
+read -p "请输入新增的TCP端口：" newport
+iptables -I INPUT -p tcp --dport $newport -j ACCEPT
+service iptables save
+service iptables restart
+chkconfig iptables on
+iptables -L -n
+returntobase
+}
