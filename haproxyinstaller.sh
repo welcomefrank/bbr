@@ -1,3 +1,22 @@
+#!/bin/bash
+
+#fonts color
+Green="\033[32m"
+Red="\033[31m"
+Yellow="\033[33m"
+GreenBG="\033[42;37m"
+RedBG="\033[41;37m"
+Font="\033[0m"
+
+returntobase(){
+read -p "是否要返回主菜单? (默认按任意键返回主菜单/按N或n退出)" backtobase
+if [ $backtobase = "N" -o $backtobase = "n" ];then
+exit 0
+else 
+menu
+fi
+}
+
 haproxyinstaller(){
 yum install wget dmidecode net-tools psmisc haproxy -y
 echo "NETWORKING=yes" >/etc/sysconfig/network
@@ -9,6 +28,7 @@ service haproxy restart
 chkconfig haproxy on
 chmod +x /etc/rc.d/rc.local
 sed -in-place -e '$a /usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg' /etc/rc.d/rc.local
+returntobase
 }
 
 addrule(){
@@ -25,7 +45,7 @@ else
 echo -e "已经确认新增线路信息 继续..."
 fi
 touch /root/haproxydata.txt
-sed -in-place -e '$a $rulename $rulefrontendport $rulebackendip $rulebackendport' /root/haproxydata.txt
+sed -in-place -e "$a $rulename $rulefrontendport $rulebackendip $rulebackendport" /root/haproxydata.txt
 cat /root/haproxydata.txt
 touch /root/test.conf
 cat >> /root/test.conf << EOF
@@ -40,10 +60,12 @@ EOF
 service haproxy restart
 service haproxy status
 cat /root/test.conf
+returntobase
 }
 
 displayrules(){
 cat /root/haproxydata.txt
+returntobase
 }
 
 deleterule(){
@@ -53,6 +75,7 @@ sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt
 sed -i "N;/\n.*$deleteport/!P;D" /root/test.conf
 sed -in-place -e "/$deleteport/,+5d" /root/test.conf 
 cat /root/test.conf
+returntobase
 }
 
 firewalld_iptables(){
@@ -94,5 +117,65 @@ service iptables save
 service iptables restart
 iptables -L -n
 }
-addrule
-deleterule
+
+menu(){
+    echo -e "${Red}中转服务器操作${Font}"
+    echo -e "${Green}1.${Font} 仅安装Haproxy"
+    echo -e "${Green}2.${Font} 新增中转线路"
+    echo -e "${Green}3.${Font} 显示所有中转线路"
+    echo -e "${Green}4.${Font} 删除指定中转线路"
+    echo -e "${Green}5.${Font} 关闭firewalld服务"
+    echo -e "${Green}6.${Font} 清空所有防火墙规则"
+    echo -e "${Green}7.${Font} 安装iptables 并开启指定TCP端口"
+    echo -e "${Green}8.${Font} 查看本机serverspeeder状态"
+    echo -e "${Green}9.${Font} 显示本机全部已有端口"
+    echo -e "${Green}10.${Font} 将指定端口流量清零"
+    echo -e "${Green}11.${Font} 重启使所有规则生效"
+    echo -e "${Green}12.${Font}  退出 \n"
+    read -p "请输入数字：" menu_num
+    case $menu_num in
+        1)
+          haproxyinstaller
+        ;;
+        2)
+          addrule
+        ;;
+        3)
+          displayrules
+          ;;
+        4)
+          deleterule
+          ;;         
+        5)
+          firewalld_iptables
+          ;; 
+        6)
+          iptables -F
+          echo -e "${Green}所有防火墙规则已经清空${Font}"
+          ;; 
+        7)
+          addtcpport
+          ;; 
+        8)
+          service serverspeeder status
+          returntobase
+          ;; 
+        9)
+          displayallports
+          ;; 
+        10)
+          clearporttraffic
+          ;; 
+        11)
+          reboot
+          ;; 
+        12)
+          exit 0
+          ;;
+        *)
+          echo -e "${RedBG}请输入正确的数字${Font}"
+          ;;
+    esac
+}
+
+menu
