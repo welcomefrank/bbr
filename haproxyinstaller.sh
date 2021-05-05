@@ -28,7 +28,7 @@ haproxy -f /etc/haproxy/haproxy.cfg
 service haproxy restart
 chkconfig haproxy on
 chmod +x /etc/rc.d/rc.local
-echo -e "$a /usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg" >> /etc/rc.d/rc.local
+echo -e "/usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg" >> /etc/rc.d/rc.local
 returntobase
 }
 
@@ -131,7 +131,7 @@ menu(){
     echo -e "${Green}7.${Font} 安装iptables-service并开放指定TCP端口"
     echo -e "${Green}8.${Font} 新增UDP中转规则"
     echo -e "${Green}9.${Font} 删除指定UDP中转规则"
-    echo -e "${Green}10.${Font} 删除指定UDP中转规则"
+    echo -e "${Green}10.${Font} 重启使所有规则生效"
     echo -e "${Green}11.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
