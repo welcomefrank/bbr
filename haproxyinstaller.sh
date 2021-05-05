@@ -88,7 +88,7 @@ returntobase
 
 addtcpport(){
 yum install iptables-services -y
-read -p "请输入新增的TCP端口：" newport
+read -p "请输入新增的开放TCP端口：" newport
 iptables -I INPUT -p tcp --dport $newport -j ACCEPT
 service iptables save
 service iptables restart
@@ -108,6 +108,7 @@ iptables -t nat -A POSTROUTING -p udp -d $destinationip --dport $destinationport
 service iptables save
 service iptables restart
 iptables -L -n
+returntobase
 }
 
 deleteudprule(){
@@ -117,22 +118,21 @@ iptables -D INPUT $linenumber
 service iptables save
 service iptables restart
 iptables -L -n
+returntobase
 }
 
 menu(){
     echo -e "${Red}中转服务器操作${Font}"
     echo -e "${Green}1.${Font} 仅安装Haproxy"
-    echo -e "${Green}2.${Font} 新增中转线路"
+    echo -e "${Green}2.${Font} 新增Haproxy TCP中转线路"
     echo -e "${Green}3.${Font} 显示所有中转线路"
     echo -e "${Green}4.${Font} 删除指定中转线路"
     echo -e "${Green}5.${Font} 关闭firewalld服务"
-    echo -e "${Green}6.${Font} 清空所有防火墙规则"
-    echo -e "${Green}7.${Font} 安装iptables 并开启指定TCP端口"
-    echo -e "${Green}8.${Font} 查看本机serverspeeder状态"
-    echo -e "${Green}9.${Font} 显示本机全部已有端口"
-    echo -e "${Green}10.${Font} 将指定端口流量清零"
-    echo -e "${Green}11.${Font} 重启使所有规则生效"
-    echo -e "${Green}12.${Font}  退出 \n"
+    echo -e "${Green}6.${Font} 清空所有TCP/UDP防火墙规则"
+    echo -e "${Green}7.${Font} 安装iptables 并开放指定TCP端口"
+    echo -e "${Green}8.${Font} 新增UDP中转规则"
+    echo -e "${Green}9.${Font} 删除指定UDP中转规则"
+    echo -e "${Green}10.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
@@ -158,19 +158,12 @@ menu(){
           addtcpport
           ;; 
         8)
-          service serverspeeder status
-          returntobase
+          addudprule
           ;; 
         9)
-          displayallports
+          deleteudprule
           ;; 
         10)
-          clearporttraffic
-          ;; 
-        11)
-          reboot
-          ;; 
-        12)
           exit 0
           ;;
         *)
