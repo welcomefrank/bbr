@@ -64,6 +64,7 @@ returntobase
 }
 
 displayrules(){
+service haproxy status
 cat /root/haproxydata.txt
 returntobase
 }
