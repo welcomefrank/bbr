@@ -128,7 +128,7 @@ menu(){
     echo -e "${Green}1.${Font} 仅安装Haproxy并设置开机自动启动"
     echo -e "${Green}2.${Font} 关闭firewalld服务"
     echo -e "${Green}3.${Font} 新增Haproxy TCP中转线路"
-    echo -e "${Green}4.${Font} 显示所有Haproxy TCP中转线路"
+    echo -e "${Green}4.${Font} 显示Haproxy运行状态 及 所有TCP中转线路"
     echo -e "${Green}5.${Font} 删除指定Haproxy TCP中转线路"
     echo -e "${Green}6.${Font} 清空所有TCP/UDP防火墙规则"
     echo -e "${Green}7.${Font} 安装iptables-service并开放指定TCP端口"
