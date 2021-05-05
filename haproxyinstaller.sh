@@ -122,10 +122,10 @@ returntobase
 menu(){
     echo -e "${Red}中转服务器操作${Font}"
     echo -e "${Green}1.${Font} 仅安装Haproxy并设置开机自动启动"
-    echo -e "${Green}2.${Font} 新增Haproxy TCP中转线路"
-    echo -e "${Green}3.${Font} 显示所有Haproxy TCP中转线路"
-    echo -e "${Green}4.${Font} 删除指定Haproxy TCP中转线路"
-    echo -e "${Green}5.${Font} 关闭firewalld服务"
+    echo -e "${Green}2.${Font} 关闭firewalld服务"
+    echo -e "${Green}3.${Font} 新增Haproxy TCP中转线路"
+    echo -e "${Green}4.${Font} 显示所有Haproxy TCP中转线路"
+    echo -e "${Green}5.${Font} 删除指定Haproxy TCP中转线路"
     echo -e "${Green}6.${Font} 清空所有TCP/UDP防火墙规则"
     echo -e "${Green}7.${Font} 安装iptables 并开放指定TCP端口"
     echo -e "${Green}8.${Font} 新增UDP中转规则"
@@ -137,17 +137,17 @@ menu(){
           haproxyinstaller
         ;;
         2)
-          addrule
-        ;;
-        3)
-          displayrules
-          ;;
-        4)
-          deleterule
-          ;;         
-        5)
           firewalld_iptables
           ;; 
+        3)
+          addrule
+        ;;
+        4)
+          displayrules
+          ;;
+        5)
+          deleterule
+          ;;         
         6)
           iptables -F
           echo -e "${Green}所有防火墙规则已经清空${Font}"
