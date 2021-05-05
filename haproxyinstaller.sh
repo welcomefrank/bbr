@@ -9,8 +9,8 @@ RedBG="\033[41;37m"
 Font="\033[0m"
 
 returntobase(){
-read -p "是否要返回主菜单? (默认按任意键返回主菜单/按N或n退出)" backtobase
-if [ $backtobase = "N" -o $backtobase = "n" ];then
+read -p "是否要返回主菜单? (默认按任意键返回主菜单/按n退出)" backtobase
+if [ $backtobase = "n" ];then
 exit 0
 else 
 menu
