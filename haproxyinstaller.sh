@@ -27,7 +27,7 @@ haproxy -f /etc/haproxy/haproxy.cfg
 service haproxy restart
 chkconfig haproxy on
 chmod +x /etc/rc.d/rc.local
-sed -in-place -e '$a /usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg' /etc/rc.d/rc.local
+echo -e "$a /usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg" >> /etc/rc.d/rc.local
 returntobase
 }
 
@@ -47,9 +47,7 @@ fi
 touch /root/haproxydata.txt
 echo -e "#The following rules added on `date +20%y-%m-%d' '%H:%M:%S`" >> /root/haproxydata.txt  
 echo -e "$rulename $rulefrontendport $rulebackendip $rulebackendport" >> /root/haproxydata.txt
-cat /root/haproxydata.txt
-touch /root/test.conf
-cat >> /root/test.conf << EOF
+cat >> /etc/haproxy/haproxy.cfg << EOF
 frontend $rulename-in
         bind *:$rulefrontendport
         default_backend $rulename-out
@@ -60,7 +58,7 @@ backend $rulename-out
 EOF
 service haproxy restart
 service haproxy status
-cat /root/test.conf
+cat /etc/haproxy/haproxy.cfg
 returntobase
 }
 
@@ -73,9 +71,9 @@ deleterule(){
 cat /root/test.conf
 read -p "请输入想要删除线路的前端口:" deleteport
 sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt 
-sed -i "N;/\n.*$deleteport/!P;D" /root/test.conf
-sed -in-place -e "/$deleteport/,+5d" /root/test.conf 
-cat /root/test.conf
+sed -i "N;/\n.*$deleteport/!P;D" /etc/haproxy/haproxy.cfg
+sed -in-place -e "/$deleteport/,+5d" /etc/haproxy/haproxy.cfg 
+cat /etc/haproxy/haproxy.cfg
 returntobase
 }
 
@@ -123,10 +121,10 @@ returntobase
 
 menu(){
     echo -e "${Red}中转服务器操作${Font}"
-    echo -e "${Green}1.${Font} 仅安装Haproxy"
+    echo -e "${Green}1.${Font} 仅安装Haproxy并设置开机自动启动"
     echo -e "${Green}2.${Font} 新增Haproxy TCP中转线路"
-    echo -e "${Green}3.${Font} 显示所有中转线路"
-    echo -e "${Green}4.${Font} 删除指定中转线路"
+    echo -e "${Green}3.${Font} 显示所有Haproxy TCP中转线路"
+    echo -e "${Green}4.${Font} 删除指定Haproxy TCP中转线路"
     echo -e "${Green}5.${Font} 关闭firewalld服务"
     echo -e "${Green}6.${Font} 清空所有TCP/UDP防火墙规则"
     echo -e "${Green}7.${Font} 安装iptables 并开放指定TCP端口"
