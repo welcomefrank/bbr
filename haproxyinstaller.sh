@@ -45,7 +45,8 @@ else
 echo -e "已经确认新增线路信息 继续..."
 fi
 touch /root/haproxydata.txt
-sed -in-place -e "$a $rulename $rulefrontendport $rulebackendip $rulebackendport" /root/haproxydata.txt
+echo -e "#The following rules added on `date +20%y-%m-%d' '%H:%M:%S`" >> /root/haproxydata.txt  
+echo -e "$rulename $rulefrontendport $rulebackendip $rulebackendport" >> /root/haproxydata.txt
 cat /root/haproxydata.txt
 touch /root/test.conf
 cat >> /root/test.conf << EOF
