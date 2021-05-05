@@ -21,7 +21,8 @@ haproxyinstaller(){
 yum install wget dmidecode net-tools psmisc haproxy -y
 echo "NETWORKING=yes" >/etc/sysconfig/network
 sysctl -w net.ipv4.ip_forward=1
-sed -in-place -e "/net.ipv4.ip_forward/ d" -e "$a net.ipv4.ip_forward=1" /etc/sysctl.conf
+sed -in-place -e "/net.ipv4.ip_forward/ d"
+echo -e "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 sysctl -p
 haproxy -f /etc/haproxy/haproxy.cfg
 service haproxy restart
@@ -127,10 +128,11 @@ menu(){
     echo -e "${Green}4.${Font} 显示所有Haproxy TCP中转线路"
     echo -e "${Green}5.${Font} 删除指定Haproxy TCP中转线路"
     echo -e "${Green}6.${Font} 清空所有TCP/UDP防火墙规则"
-    echo -e "${Green}7.${Font} 安装iptables 并开放指定TCP端口"
+    echo -e "${Green}7.${Font} 安装iptables-service并开放指定TCP端口"
     echo -e "${Green}8.${Font} 新增UDP中转规则"
     echo -e "${Green}9.${Font} 删除指定UDP中转规则"
-    echo -e "${Green}10.${Font}  退出 \n"
+    echo -e "${Green}10.${Font} 删除指定UDP中转规则"
+    echo -e "${Green}11.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
@@ -162,6 +164,9 @@ menu(){
           deleteudprule
           ;; 
         10)
+          reboot
+          ;; 
+        11)
           exit 0
           ;;
         *)
