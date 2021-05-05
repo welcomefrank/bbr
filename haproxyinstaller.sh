@@ -69,12 +69,14 @@ returntobase
 }
 
 deleterule(){
-cat /root/test.conf
+cat /root/haproxydata.txt
 read -p "请输入想要删除线路的前端口:" deleteport
 sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt 
 sed -i "N;/\n.*$deleteport/!P;D" /etc/haproxy/haproxy.cfg
 sed -in-place -e "/$deleteport/,+5d" /etc/haproxy/haproxy.cfg 
 cat /etc/haproxy/haproxy.cfg
+service haproxy restart
+service haproxy status
 returntobase
 }
 
