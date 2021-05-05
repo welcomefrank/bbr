@@ -126,12 +126,12 @@ returntobase
 menu(){
     echo -e "${Red}中转服务器操作${Font}"
     echo -e "${Green}1.${Font} 仅安装Haproxy并设置开机自动启动"
-    echo -e "${Green}2.${Font} 关闭firewalld服务"
-    echo -e "${Green}3.${Font} 新增Haproxy TCP中转线路"
-    echo -e "${Green}4.${Font} 显示Haproxy运行状态 及 所有TCP中转线路"
-    echo -e "${Green}5.${Font} 删除指定Haproxy TCP中转线路"
-    echo -e "${Green}6.${Font} 清空所有TCP/UDP防火墙规则"
-    echo -e "${Green}7.${Font} 安装iptables-service并开放指定TCP端口"
+    echo -e "${Green}2.${Font} 安装iptables-service并开放指定TCP端口"
+    echo -e "${Green}3.${Font} 关闭firewalld服务"
+    echo -e "${Green}4.${Font} 新增Haproxy TCP中转线路"
+    echo -e "${Green}5.${Font} 显示Haproxy运行状态 及 所有TCP中转线路"
+    echo -e "${Green}6.${Font} 删除指定Haproxy TCP中转线路"
+    echo -e "${Green}7.${Font} 清空所有TCP/UDP防火墙规则"
     echo -e "${Green}8.${Font} 新增UDP中转规则"
     echo -e "${Green}9.${Font} 删除指定UDP中转规则"
     echo -e "${Green}10.${Font} 重启使所有规则生效"
@@ -142,23 +142,23 @@ menu(){
           haproxyinstaller
         ;;
         2)
-          firewalld_iptables
+          addtcpport   
           ;; 
         3)
-          addrule
+          firewalld_iptables
         ;;
         4)
-          displayrules
+          addrule
           ;;
         5)
-          deleterule
+          displayrules
           ;;         
         6)
-          iptables -F
-          echo -e "${Green}所有防火墙规则已经清空${Font}"
+          deleterule
           ;; 
         7)
-          addtcpport
+          iptables -F
+          echo -e "${Green}所有防火墙规则已经清空${Font}"
           ;; 
         8)
           addudprule
