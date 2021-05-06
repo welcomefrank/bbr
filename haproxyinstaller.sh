@@ -116,8 +116,6 @@ displayudprules(){
 if ! [ -x "$(command -v tcpdump)" ]; then
 echo -e "tcpdump未安装 准备安装.."
 yum install tcpdump -y
-else
-echo -e "已经安装tcpdump 继续.."
 fi
 iptables -t nat -xnvL PREROUTING
 read -p "查看指定UDP前端口的中转状态：" udpporttraffic
