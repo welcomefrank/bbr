@@ -114,12 +114,12 @@ returntobase
 }
 
 deleteudprule(){
-iptables -L -n  --line-number
-read -p "请输入需要删除的INPUT规则序列号：" linenumber
-iptables -D INPUT $linenumber
+read -p "请输入需要删除的UDP规则顺序号(第一条/第二条...)：" udpnumber
+iptables -t nat -D PREROUTING $udpnumber
 service iptables save
 service iptables restart
-iptables -L -n
+echo -e "修改后的全部UDP中转规则如下:"
+iptables -t nat -xnvL PREROUTING
 returntobase
 }
 
@@ -133,9 +133,10 @@ menu(){
     echo -e "${Green}6.${Font} 删除指定Haproxy TCP中转线路"
     echo -e "${Green}7.${Font} 清空所有TCP/UDP防火墙规则"
     echo -e "${Green}8.${Font} 新增UDP中转规则"
-    echo -e "${Green}9.${Font} 删除指定UDP中转规则"
-    echo -e "${Green}10.${Font} 重启使所有规则生效"
-    echo -e "${Green}11.${Font}  退出 \n"
+    echo -e "${Green}9.${Font} 显示所有UDP中转规则"
+    echo -e "${Green}10.${Font} 删除指定UDP中转规则"
+    echo -e "${Green}11.${Font} 重启使所有规则生效"
+    echo -e "${Green}12.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
@@ -162,14 +163,17 @@ menu(){
           ;; 
         8)
           addudprule
-          ;; 
+          ;;
         9)
+          iptables -t nat -xnvL PREROUTING
+          ;;
+        10)
           deleteudprule
           ;; 
-        10)
+        11)
           reboot
           ;; 
-        11)
+        12)
           exit 0
           ;;
         *)
