@@ -119,6 +119,7 @@ returntobase
 }
 
 deleteudprule(){
+iptables -t nat -xnvL PREROUTING
 read -p "请输入需要删除的UDP规则顺序号(第一条/第二条...)：" udpnumber
 iptables -t nat -D PREROUTING $udpnumber
 service iptables save
