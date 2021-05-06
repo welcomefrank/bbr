@@ -63,8 +63,10 @@ cat /etc/haproxy/haproxy.cfg
 returntobase
 }
 
-displayrules(){
+displayhaproxyrules(){
+echo -e "${Red}目前Haproxy的运行状态如下:${Font}"
 service haproxy status
+echo -e "${Red}目前所有TCP中转线路如下:${Font}"
 cat /root/haproxydata.txt
 returntobase
 }
@@ -158,7 +160,7 @@ menu(){
           addrule
           ;;
         5)
-          displayrules
+          displayhaproxyrules
           ;;         
         6)
           deleterule
