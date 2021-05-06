@@ -100,8 +100,6 @@ returntobase
 }
 
 addudprule(){
-yum install iptables-services -y
-chkconfig iptables on
 read -p "请输入本服务器的UDP前端口：" sourcepport
 read -p "请输入终端服务器的IP：" destinationip
 read -p "请输入终端服务器的端口：" destinationport
@@ -109,7 +107,14 @@ iptables -t nat -A PREROUTING -p udp --dport $sourcepport -j DNAT --to-destinati
 iptables -t nat -A POSTROUTING -p udp -d $destinationip --dport $destinationport -j MASQUERADE
 service iptables save
 service iptables restart
-iptables -L -n
+returntobase
+}
+
+displayudprules(){
+yum install tcpdump -y
+iptables -t nat -xnvL PREROUTING
+read -p "查看指定UDP前端口的中转状态：" udpporttraffic
+tcpdump udp port $udpporttraffic -n
 returntobase
 }
 
@@ -133,7 +138,7 @@ menu(){
     echo -e "${Green}6.${Font} 删除指定Haproxy TCP中转线路"
     echo -e "${Green}7.${Font} 清空所有TCP/UDP防火墙规则"
     echo -e "${Green}8.${Font} 新增UDP中转规则"
-    echo -e "${Green}9.${Font} 显示所有UDP中转规则"
+    echo -e "${Green}9.${Font} 显示所有UDP中转规则 及 指定前端口的中转状态"
     echo -e "${Green}10.${Font} 删除指定UDP中转规则"
     echo -e "${Green}11.${Font} 重启使所有规则生效"
     echo -e "${Green}12.${Font}  退出 \n"
@@ -165,7 +170,7 @@ menu(){
           addudprule
           ;;
         9)
-          iptables -t nat -xnvL PREROUTING
+          displayudprules
           ;;
         10)
           deleteudprule
