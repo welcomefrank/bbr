@@ -118,6 +118,10 @@ echo -e "tcpdump未安装 准备安装.."
 yum install tcpdump -y
 fi
 iptables -t nat -xnvL PREROUTING
+read -p "是否要继续查看指定UDP前端口的中转状态? (默认按任意键继续/按n退出到主菜单)" yesnocontinue
+if [ $yesnocontinue = "n" ];then
+menu
+fi
 read -p "查看指定UDP前端口的中转状态：" udpporttraffic
 tcpdump udp port $udpporttraffic -n
 returntobase
