@@ -9,7 +9,7 @@ RedBG="\033[41;37m"
 Font="\033[0m"
 
 returntobase(){
-read -p "${Green}是否要返回主菜单? (默认按任意键返回主菜单/按n退出)${Font}" backtobase
+read -p "是否要返回主菜单? (默认按任意键返回主菜单/按n退出)" backtobase
 if [ $backtobase = "n" ];then
 exit 0
 else 
@@ -113,7 +113,12 @@ returntobase
 }
 
 displayudprules(){
+if ! [ -x "$(command -v tcpdump)" ]; then
+echo -e "tcpdump未安装 准备安装.."
 yum install tcpdump -y
+else
+echo -e "已经安装tcpdump 继续.."
+fi
 iptables -t nat -xnvL PREROUTING
 read -p "查看指定UDP前端口的中转状态：" udpporttraffic
 tcpdump udp port $udpporttraffic -n
