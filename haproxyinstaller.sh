@@ -19,6 +19,7 @@ fi
 
 haproxyinstaller(){
 yum install wget dmidecode net-tools psmisc haproxy -y
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 echo "NETWORKING=yes" >/etc/sysconfig/network
 sysctl -w net.ipv4.ip_forward=1
 sed -in-place -e "/net.ipv4.ip_forward/ d"
