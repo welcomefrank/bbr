@@ -38,7 +38,6 @@ read -p "请输入新增线路的名称：" rulename
 read -p "请输入新增线路的前端口：" rulefrontendport
 read -p "请输入新增线路的后端IP地址：" rulebackendip
 read -p "请输入新增线路的后端口：" rulebackendport
-clear
 echo -e "刚刚输入的信息如下:\n新增线路的名称:$rulename\n新增线路的前端口:$rulefrontendport\n新增线路的后端IP地址:$rulebackendip\n新增线路的后端口:$rulebackendport"
 read -p "按任意键确认 按n回车表示放弃并退出" confirmrule
 if [ $confirmrule = "n" ];then
@@ -72,7 +71,7 @@ cat /root/haproxydata.txt
 returntobase
 }
 
-deleterule(){
+deletehaproxyrule(){
 cat /root/haproxydata.txt
 read -p "请输入想要删除线路的前端口:" deleteport
 sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt 
@@ -88,6 +87,17 @@ firewalld_iptables(){
 systemctl stop firewalld
 systemctl disable firewalld
 systemctl status firewalld
+returntobase
+}
+
+deletetcprule(){
+iptables -L -n  --line-number
+read -p "请输入要删除的INPUT TCP规则序列号：" tcprulenumber
+iptables -D INPUT $tcprulenumber
+service iptables save
+service iptables restart
+echo -e "${Green}指定的TCP规则已经删除 以下为最新TCP规则:${Font}"
+iptables -L -n  --line-number
 returntobase
 }
 
@@ -142,17 +152,18 @@ returntobase
 menu(){
     echo -e "${Red}中转服务器操作${Font}"
     echo -e "${Green}1.${Font} 仅安装Haproxy并设置开机自动启动"
-    echo -e "${Green}2.${Font} 安装iptables-service并开放指定TCP端口"
+    echo -e "${Green}2.${Font} 安装iptables-service 并 开放指定TCP端口"
     echo -e "${Green}3.${Font} 关闭firewalld服务"
     echo -e "${Green}4.${Font} 新增Haproxy TCP中转线路"
     echo -e "${Green}5.${Font} 显示Haproxy运行状态 及 所有TCP中转线路"
     echo -e "${Green}6.${Font} 删除指定Haproxy TCP中转线路"
-    echo -e "${Green}7.${Font} 清空所有TCP/UDP防火墙规则"
-    echo -e "${Green}8.${Font} 新增UDP中转规则"
-    echo -e "${Green}9.${Font} 显示所有UDP中转规则 及 指定前端口的中转状态"
-    echo -e "${Green}10.${Font} 删除指定UDP中转规则"
-    echo -e "${Green}11.${Font} 重启使所有规则生效"
-    echo -e "${Green}12.${Font}  退出 \n"
+    echo -e "${Green}7.${Font} 删除指定iptables TCP规则"
+    echo -e "${Green}8.${Font} 清空所有TCP/UDP防火墙规则"
+    echo -e "${Green}9.${Font} 新增UDP中转规则"
+    echo -e "${Green}10.${Font} 显示所有UDP中转规则 及 指定前端口的中转状态"
+    echo -e "${Green}11.${Font} 删除指定UDP中转规则"
+    echo -e "${Green}12.${Font} 重启使所有规则生效"
+    echo -e "${Green}13.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
@@ -171,25 +182,28 @@ menu(){
           displayhaproxyrules
           ;;         
         6)
-          deleterule
-          ;; 
+          deletehaproxyrule
+          ;;
         7)
+          deletetcprule
+          ;;
+        8)
           iptables -F
           echo -e "${Green}所有防火墙规则已经清空${Font}"
           ;; 
-        8)
+        9)
           addudprule
           ;;
-        9)
+        10)
           displayudprules
           ;;
-        10)
+        11)
           deleteudprule
           ;; 
-        11)
+        12)
           reboot
           ;; 
-        12)
+        13)
           exit 0
           ;;
         *)
