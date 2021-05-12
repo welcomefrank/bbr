@@ -43,7 +43,7 @@ read -p "按任意键确认 按n回车表示放弃并退出" confirmrule
 if [ $confirmrule = "n" ];then
 exit 0 
 else
-echo -e "已经确认新增线路信息 继续..."
+echo -e "${Green}已经确认新增线路信息 继续...${Font}"
 fi
 touch /root/haproxydata.txt
 echo -e "#The following rule for $rulefrontendport added on `date +20%y-%m-%d' '%H:%M:%S`" >> /root/haproxydata.txt  
@@ -128,7 +128,7 @@ returntobase
 
 displayudprules(){
 if ! [ -x "$(command -v tcpdump)" ]; then
-echo -e "tcpdump未安装 准备安装.."
+echo -e "${Red}tcpdump未安装 准备安装..${Font}"
 yum install tcpdump -y
 fi
 iptables -t nat -xnvL PREROUTING
@@ -147,7 +147,7 @@ read -p "请输入需要删除的UDP规则顺序号(第一条/第二条...)：" 
 iptables -t nat -D PREROUTING $udpnumber
 service iptables save
 service iptables restart
-echo -e "修改后的全部UDP中转规则如下:"
+echo -e "${Green}修改后的全部UDP中转规则如下:${Font}"
 iptables -t nat -xnvL PREROUTING
 returntobase
 }
