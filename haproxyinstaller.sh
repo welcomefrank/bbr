@@ -102,7 +102,11 @@ returntobase
 }
 
 addtcpport(){
-yum install iptables-services -y
+if ! [ -x "$(command -v iptables-services)" ]; then
+  echo -e "${Red}iptables-services未安装 现在开始安装...${Font}"
+  yum install iptables-services -y
+  else
+fi
 read -p "请输入新增的开放TCP端口：" newport
 iptables -I INPUT -p tcp --dport $newport -j ACCEPT
 service iptables save
@@ -153,11 +157,11 @@ menu(){
     echo -e "${Red}中转服务器操作${Font}"
     echo -e "${Green}1.${Font} 仅安装Haproxy并设置开机自动启动"
     echo -e "${Green}2.${Font} 安装iptables-service 并 开放指定TCP端口"
-    echo -e "${Green}3.${Font} 关闭firewalld服务"
-    echo -e "${Green}4.${Font} 新增Haproxy TCP中转线路"
-    echo -e "${Green}5.${Font} 显示Haproxy运行状态 及 所有TCP中转线路"
-    echo -e "${Green}6.${Font} 删除指定Haproxy TCP中转线路"
-    echo -e "${Green}7.${Font} 删除指定iptables TCP规则"
+    echo -e "${Green}3.${Font} 删除指定iptables TCP规则"
+    echo -e "${Green}4.${Font} 关闭firewalld服务"
+    echo -e "${Green}5.${Font} 新增Haproxy TCP中转线路"
+    echo -e "${Green}6.${Font} 显示Haproxy运行状态 及 所有TCP中转线路"
+    echo -e "${Green}7.${Font} 删除指定Haproxy TCP中转线路"
     echo -e "${Green}8.${Font} 清空所有TCP/UDP防火墙规则"
     echo -e "${Green}9.${Font} 新增UDP中转规则"
     echo -e "${Green}10.${Font} 显示所有UDP中转规则 及 指定前端口的中转状态"
