@@ -102,7 +102,7 @@ returntobase
 }
 
 addtcpport(){
-if ! [ -x "$(command -v iptables-services)" ]; then
+if ! [ -x "$(/usr/lib/systemd/system/iptables.service)" ]; then
   echo -e "${Red}iptables-services未安装 现在开始安装...${Font}"
   yum install iptables-services -y
 fi
