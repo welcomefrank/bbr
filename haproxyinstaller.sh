@@ -105,7 +105,6 @@ addtcpport(){
 if ! [ -x "$(command -v iptables-services)" ]; then
   echo -e "${Red}iptables-services未安装 现在开始安装...${Font}"
   yum install iptables-services -y
-  else
 fi
 read -p "请输入新增的开放TCP端口：" newport
 iptables -I INPUT -p tcp --dport $newport -j ACCEPT
