@@ -36,7 +36,6 @@ defaults
         timeout connect 10000
         timeout client 150000
         timeout server 150000
-
 EOF
 haproxy -f /etc/haproxy/haproxy.cfg
 service haproxy restart
@@ -63,6 +62,7 @@ touch /root/haproxydata.txt
 echo -e "#The following rule for $rulefrontendport added on `date +20%y-%m-%d' '%H:%M:%S`" >> /root/haproxydata.txt  
 echo -e "$rulename $rulefrontendport $rulebackendip $rulebackendport" >> /root/haproxydata.txt
 cat >> /etc/haproxy/haproxy.cfg << EOF
+
 frontend $rulename-in
         bind *:$rulefrontendport
         default_backend $rulename-out
