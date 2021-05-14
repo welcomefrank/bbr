@@ -62,13 +62,15 @@ touch /root/haproxydata.txt
 echo -e "#The following rule for $rulefrontendport added on `date +20%y-%m-%d' '%H:%M:%S`" >> /root/haproxydata.txt  
 echo -e "$rulename $rulefrontendport $rulebackendip $rulebackendport" >> /root/haproxydata.txt
 cat >> /etc/haproxy/haproxy.cfg << EOF
-$\n
+BEGIN;
+
 frontend $rulename-in
         bind *:$rulefrontendport
         default_backend $rulename-out
 
 backend $rulename-out
         server server1 $rulebackendip:$rulebackendport maxconn 20480
+END;
 EOF
 service haproxy restart
 service haproxy status
