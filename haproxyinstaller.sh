@@ -69,7 +69,6 @@ frontend $rulename-in
 
 backend $rulename-out
         server server1 $rulebackendip:$rulebackendport maxconn 20480
-
 EOF
 service haproxy restart
 service haproxy status
