@@ -25,10 +25,24 @@ sysctl -w net.ipv4.ip_forward=1
 sed -in-place -e "/net.ipv4.ip_forward/ d"
 echo -e "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 sysctl -p
+cat >> /etc/haproxy/haproxy.cfg << EOF
+global
+        ulimit-n  51200
+
+defaults
+        log global
+        mode    tcp
+        option  dontlognull
+        timeout connect 10000
+        timeout client 150000
+        timeout server 150000
+
+EOF
 haproxy -f /etc/haproxy/haproxy.cfg
 service haproxy restart
 chkconfig haproxy on
 chmod +x /etc/rc.d/rc.local
+sed -in-place -e "/haproxy/ d" /etc/rc.d/rc.local
 echo -e "/usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg" >> /etc/rc.d/rc.local
 returntobase
 }
