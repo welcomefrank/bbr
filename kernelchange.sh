@@ -136,9 +136,9 @@ menu
 
 menu(){
     echo -e "${Red}更换本机内核 + 锐速安装${Font}"
-    echo -e "${Green}1.${Font} 全自动更新本机内核"
-    echo -e "${Green}2.${Font} 安装锐速Serverspeeder并设置开机自动启动"
-    echo -e "${Green}3.${Font} 本机锐速运行状态"
+    echo -e "${Green}1.${Font} 半自动更新本机内核"
+    echo -e "${Green}2.${Font} 安装锐速Serverspeeder 并 设置开机自动启动"
+    echo -e "${Green}3.${Font} 查看本机锐速运行状态"
     echo -e "${Green}4.${Font}  退出 \n"
     read -p "请输入数字：" menu_num
     case $menu_num in
