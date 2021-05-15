@@ -6,7 +6,7 @@ GreenBG="\033[42;37m"
 RedBG="\033[41;37m"
 Font="\033[0m"
 
-sudu su
+cd /root
 
 kernelchange(){
 hostnamectl
