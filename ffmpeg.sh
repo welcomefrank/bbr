@@ -18,7 +18,8 @@ fullname="${fullfile##*/}"
 dir="${fullfile%/*}"
 extension="${fullname##*.}"
 filename="${fullname%.*}"
-echo -e "$dir, $fullname,$filename, $extension"
+echo -e "$dir, $fullname, $filename, $extension"
+ffmpeg -i fullfile -vf scale=1280:720 $filename.avi
 done
 }
 
