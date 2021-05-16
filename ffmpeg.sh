@@ -10,24 +10,14 @@ ffmpeg -version
 
 ffmpeg_resize(){
 read -p "请输入要压缩视频所在的文件夹地址" videodirectory
-read -p "请输入要压缩视频后的" videodirectory
+read -p "请输入要压缩视频后的后缀" videotype
 
-for file in `find . | grep ".mp4$"`;
+for fullfile in `find $videodirectory -type f -name *.$videotype`;
 do
-newname=`basename -s .mp4 $file`
-newdirname=`dirname $file`
-output=$newdirname"/"$newname"_o.mp4"
- 
-tt=`ffprobe -v error -show_entries stream=width,height -of default=noprint_wrappers=1 $file`
- 
-echo $tt | awk -F'[ =]+' 
-#'{print $2,$4}'
-HandBrakeCLI -i $file -o $output -O -e x264 -q 22 -w $2 -l $4 -B 48
-#HandBrakeCLI -i $file -o $output -O -e x264 -q 22 -w 1280 -l 720 -B 48
-#mv $output $file
-————————————————
-版权声明：本文为CSDN博主「pipicfan」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/pengfeicfan/article/details/108012383
-
+fullname="${fullfile##*/}"
+dir="${fullfile%/*}"
+extension="${fullname##*.}"
+filename="${fullname%.*}"
+echo -e "$dir, $fullname,$filename, $extension"
 done
 }
