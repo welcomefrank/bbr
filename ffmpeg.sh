@@ -21,3 +21,5 @@ filename="${fullname%.*}"
 echo -e "$dir, $fullname,$filename, $extension"
 done
 }
+
+ffmpeg_resize
