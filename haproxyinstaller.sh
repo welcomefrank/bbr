@@ -88,13 +88,13 @@ deletehaproxyrule(){
 cat /root/haproxydata.txt
 read -p "请输入想要删除线路的前端口:" deleteport
 deleterulename=$(grep "$deleteport" /root/haproxydata.txt | tail -n1 | awk '{print $1}')
-echo -e "即将要删除的是含有$deleterulename的行"
 sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt 
 sed -i "N;/\n.*$deleterulename/!P;D" /etc/haproxy/haproxy.cfg
 sed -in-place -e "/$deleterulename/,+5d" /etc/haproxy/haproxy.cfg 
 cat /etc/haproxy/haproxy.cfg | tail -n +99
 service haproxy restart
 service haproxy status
+echo -e "${Green}已经删除TCP中转线路 线路名称:$deleterulename 线路前端口:$deleteport ${Font}"
 returntobase
 }
 
