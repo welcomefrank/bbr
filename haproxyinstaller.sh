@@ -89,7 +89,7 @@ cat /root/haproxydata.txt
 read -p "请输入想要删除线路的前端口:" deleteport
 deleterulename=$(grep "$deleteport" /root/haproxydata.txt | tail -n1 | awk '{print $1}')
 sed -in-place -e "/$deleteport/ d" /root/haproxydata.txt 
-sed -in-place -e "/$deleterulename/,+5d" /etc/haproxy/haproxy.cfg 
+sed -in-place -e "/$deleterulename/,+6d" /etc/haproxy/haproxy.cfg 
 cat /etc/haproxy/haproxy.cfg | tail -n +98
 service haproxy restart
 service haproxy status
