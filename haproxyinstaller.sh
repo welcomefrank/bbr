@@ -72,7 +72,7 @@ backend $rulename-out
 EOF
 service haproxy restart
 service haproxy status
-cat /etc/haproxy/haproxy.cfg | tail -n +99
+cat /etc/haproxy/haproxy.cfg | tail -n +98
 returntobase
 }
 
