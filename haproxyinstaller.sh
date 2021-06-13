@@ -94,7 +94,7 @@ sed -in-place -e "/$deleterulename/,+5d" /etc/haproxy/haproxy.cfg
 cat /etc/haproxy/haproxy.cfg | tail -n +99
 service haproxy restart
 service haproxy status
-echo -e "${Green}已经删除TCP中转线路 线路名称:$deleterulename 线路前端口:$deleteport ${Font}"
+echo -e "已经删除TCP中转线路 ${Red}线路名称:$deleterulename 线路前端口:$deleteport ${Font}"
 returntobase
 }
 
