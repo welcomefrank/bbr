@@ -166,11 +166,11 @@ returntobase
 
 menu(){
     echo -e "${Red}中转服务器操作${Font}"
-    echo -e "${Green}1.${Font} 仅安装Haproxy并设置开机自动启动"
-    echo -e "${Green}2.${Font} 安装iptables-service 并 开放指定TCP端口"
-    echo -e "${Green}3.${Font} 显示所有iptables TCP规则"
-    echo -e "${Green}4.${Font} 删除指定iptables TCP规则"
-    echo -e "${Green}5.${Font} 关闭firewalld服务"
+    echo -e "${Green}1.${Font} 安装iptables-service 并 开放指定TCP端口"
+    echo -e "${Green}2.${Font} 显示所有iptables TCP规则"
+    echo -e "${Green}3.${Font} 删除指定iptables TCP规则"
+    echo -e "${Green}4.${Font} 关闭firewalld服务"
+    echo -e "${Green}5.${Font} 仅安装Haproxy并设置开机自动启动"
     echo -e "${Green}6.${Font} 新增Haproxy TCP中转线路"
     echo -e "${Green}7.${Font} 显示Haproxy运行状态 及 所有TCP中转线路"
     echo -e "${Green}8.${Font} 删除指定Haproxy TCP中转线路"
@@ -183,20 +183,20 @@ menu(){
     read -p "请输入数字：" menu_num
     case $menu_num in
         1)
-          haproxyinstaller
-        ;;
-        2)
           addtcpport   
           ;; 
-        3)
+        2)
           iptables -L -n
           returntobase
           ;;
-        4)
+        3)
           deletetcprule
         ;;  
-        5)
+        4)
           firewalld_iptables
+        ;;
+        5)
+          haproxyinstaller
         ;;
         6)
           addrule
