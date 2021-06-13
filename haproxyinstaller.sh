@@ -59,7 +59,7 @@ else
 echo -e "${Green}已经确认新增线路信息 继续...${Font}"
 fi
 touch /root/haproxydata.txt
-echo -e "#The following rule for $rulefrontendport added on `date +20%y-%m-%d' '%H:%M:%S`" >> /root/haproxydata.txt  
+echo -e "#The following rule for ${Red}$rulefrontendport${Font} added on `date +20%y-%m-%d' '%H:%M:%S`" >> /root/haproxydata.txt  
 echo -e "$rulename $rulefrontendport $rulebackendip $rulebackendport" >> /root/haproxydata.txt
 cat >> /etc/haproxy/haproxy.cfg << EOF
 
