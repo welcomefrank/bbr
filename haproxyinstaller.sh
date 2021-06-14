@@ -52,7 +52,7 @@ read -p "请输入新增线路的名称：" rulename
 read -p "请输入新增线路的前端口：" rulefrontendport
 read -p "请输入新增线路的后端IP地址：" rulebackendip
 read -p "请输入新增线路的后端口：" rulebackendport
-echo -e "刚刚输入的信息如下:\n新增线路的名称:$rulename\n新增线路的前端口:$rulefrontendport\n新增线路的后端IP地址:$rulebackendip\n新增线路的后端口:$rulebackendport"
+echo -e "刚刚输入的信息如下:\n新增线路的名称:${Red}$rulename${Font}\n新增线路的前端口:${Red}$rulefrontendport${Font}\n新增线路的后端IP地址:${Red}$rulebackendip${Font}\n新增线路的后端口:${Red}$rulebackendport${Font}"
 read -p "按任意键确认 按n回车表示放弃并退出" confirmrule
 if [ $confirmrule = "n" ];then
 exit 0 
