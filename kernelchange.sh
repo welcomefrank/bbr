@@ -118,9 +118,9 @@ Install_ServerSpeeder(){
 		rm -rf /root/serverspeeder.sh
 		rm -rf /root/91yunserverspeeder
 		rm -rf /root/91yunserverspeeder.tar.gz
-		echo -e "${Info} 锐速(Server Speeder) 安装完成 !" && exit 1
+		echo -e "${Info} 锐速(Server Speeder) 安装完成 !" 
 	else
-		echo -e "${Error} 锐速(Server Speeder) 安装失败 !" && exit 1
+		echo -e "${Error} 锐速(Server Speeder) 安装失败 !"
 	fi
 ln -s /serverspeeder/bin/serverSpeeder.sh /etc/init.d/serverspeeder
 if [ $? -eq 0 ]; then
