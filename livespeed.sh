@@ -11,7 +11,7 @@ do
   TX_next=$(cat /proc/net/dev | grep $ethn | sed 's/:/ /g' | awk '{print $10}')
 
   clear
-  echo -e "\t \033[32m 接收RX \033[0m 当前时间:`date +%k:%M:%S` \033[31m 发送TX \033[0m"
+  echo -e "\t \033[32m 接收RX \033[0m 当前时间`date +%k:%M:%S` \033[31m 发送TX \033[0m"
 
   RX=$((${RX_next}-${RX_pre}))
   TX=$((${TX_next}-${TX_pre}))
