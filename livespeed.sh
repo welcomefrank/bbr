@@ -1,4 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
+
+if ! [ -x "$(command -v bc)" ]; then
+echo -e "bc未安装 准备安装.."
+yum install bc -y
+fi
 
 ethn=$1
 
